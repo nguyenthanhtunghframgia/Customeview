@@ -7,7 +7,9 @@ import android.view.View
 
 class CustomDiagram(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
-    val paint: Paint = Paint()
+    val paintInner: Paint = Paint()
+    val paintOutta: Paint = Paint()
+    val paintProgress: Paint = Paint()
     private var borderColor: Int
     private var isPercent: Boolean = false
     private var drawable: Int = 0
@@ -31,31 +33,50 @@ class CustomDiagram(context: Context, attributeSet: AttributeSet) : View(context
 
     override fun onDraw(canvas: Canvas?) {
         //
-        paint.isAntiAlias = true
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 10F
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.color = borderColor
-        paint.textSize = 100F
-        paint.textAlign = Paint.Align.CENTER
+        paintInner.isAntiAlias = true
+        paintInner.style = Paint.Style.STROKE
+        paintInner.strokeWidth = 20F
+        paintInner.strokeCap = Paint.Cap.ROUND
+        paintInner.color = borderColor
+        paintInner.textSize = 100F
+        paintInner.textAlign = Paint.Align.CENTER
 
         //
-        canvas?.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), 200F, paint)
-        canvas?.drawBitmap(
-            bitmap,
-            (width - bitmap.width) / 2.toFloat(),
-            (height - bitmap.height) / 2.toFloat(),
-            paint
-        )
+        paintOutta.isAntiAlias = true
+        paintOutta.style = Paint.Style.STROKE
+        paintOutta.strokeWidth = 20F
+        paintOutta.strokeCap = Paint.Cap.ROUND
+        paintOutta.color = borderColor
+        paintOutta.textAlign = Paint.Align.CENTER
+        //
+        paintProgress.isAntiAlias = true
+        paintProgress.style = Paint.Style.STROKE
+        paintProgress.strokeWidth = 30F
+        paintProgress.strokeCap = Paint.Cap.ROUND
+        paintProgress.color = Color.RED
+        paintProgress.textAlign = Paint.Align.CENTER
 
         //
-        if (isPercent) {
-            canvas?.drawText("Halo", (width / 2).toFloat(), 100F, paint)
+        canvas?.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), 180F, paintInner)
+        canvas?.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), 200F, paintProgress)
+        canvas?.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), 220F, paintOutta)
+//        canvas?.drawBitmap(
+//            bitmap,
+//            (width - bitmap.width) / 2.toFloat(),
+//            (height - bitmap.height) / 2.toFloat(),
+//            paint
+//        )
+
+        //
+        if (borderColor == resources.getColor(R.color.colorPrimary)) {
+            canvas?.drawText("PRIMARY", (width / 2).toFloat(), 100F, paintInner)
+        } else {
+            canvas?.drawText("MAGNETA", (width / 2).toFloat(), 100F, paintInner)
         }
     }
 
     fun changeColor() {
-        borderColor = if (paint.color == Color.MAGENTA) {
+        borderColor = if (paintInner.color == Color.MAGENTA) {
             resources.getColor(R.color.colorPrimary)
         } else {
             Color.MAGENTA
