@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CustomDiagram">
-        <attr name="border_color" format="integer" />
-        <attr name="is_percent" format="boolean" />
+    <declare-styleable name="CustomView">
         <attr name="drawable" format="integer" />
     </declare-styleable>
 </resources>
